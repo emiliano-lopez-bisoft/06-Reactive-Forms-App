@@ -23,10 +23,13 @@
           class="form-control"
           placeholder="Agregar favorito"
           [formControl]="newFavorite"
-          (keyup.enter)="onAddToFavorites()"
+          (keydown.enter)="onAddToFavorites()"
+          (keydown.enter)="$event.preventDefault()"
         />
 
-        <button class="btn btn-outline-primary" type="button">Agregar favorito</button>
+        <button class="btn btn-outline-primary" type="button" (click)="onAddToFavorites()">
+          Agregar favorito
+        </button>
       </div>
     </div>
   </div>
