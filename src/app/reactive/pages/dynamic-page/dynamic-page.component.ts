@@ -7,6 +7,7 @@ import {
   ɵInternalFormsSharedModule,
   ReactiveFormsModule,
   FormArray,
+  FormControl,
 } from '@angular/forms';
 import { FormUtils } from '../../../utils/form-utils';
 
@@ -26,11 +27,30 @@ export class DynamicPageComponent {
         ['Metal Gear Solid', Validators.required],
         ['Death Stranding', Validators.required],
       ],
-      Validators.minLength(3),
+      Validators.minLength(2),
     ),
   });
 
+  newFavorite = new FormControl('', Validators.required);
+
   get favoriteGames() {
     return this.myForm.get('favoriteGames') as FormArray;
+  }
+
+  onAddToFavorites() {
+    if (this.newFavorite.invalid) return;
+    const newGame = this.newFavorite.value;
+
+    this.favoriteGames.push(this.fb.control(newGame, Validators.required));
+
+    this.newFavorite.reset();
+  }
+
+  onDeleteFavorite(index: number) {
+    this.favoriteGames.removeAt(index);
+  }
+
+  onSubmit() {
+    this.myForm.markAllAsTouched();
   }
 }
