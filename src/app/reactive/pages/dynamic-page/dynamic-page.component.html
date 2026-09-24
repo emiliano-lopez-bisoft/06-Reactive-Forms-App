@@ -7,7 +7,10 @@
     <label class="col-sm-3 col-form-label">Nombre</label>
     <div class="col-sm-9">
       <input class="form-control" placeholder="Nombre de la persona" formControlName="name" />
-      <span class="form-text text-danger"> error message </span>
+
+      @if (formUtils.isValidField(myForm, 'name')) {
+        <span class="form-text text-danger"> {{ formUtils.getFieldError(myForm, 'name') }} </span>
+      }
     </div>
   </div>
 
@@ -27,6 +30,7 @@
   <div class="mb-3 row">
     <label class="col-sm-3 col-form-label">Favoritos</label>
     <div class="col-sm-9" formArrayName="favoriteGames">
+      <!---   -->
       @for (favoriteGame of favoriteGames.controls; track $index; let i = $index) {
         <div class="mb-1">
           <div class="input-group">
@@ -34,7 +38,12 @@
 
             <button class="btn btn-outline-danger" type="button">Eliminar</button>
           </div>
-          <span class="form-text text-danger"> Este campo es requerido </span>
+
+          @if (formUtils.isValidFieldInArray(favoriteGames, i)) {
+            <span class="form-text text-danger">
+              {{ formUtils.getFieldErrorInArray(favoriteGames, i) }}
+            </span>
+          }
         </div>
       }
     </div>
